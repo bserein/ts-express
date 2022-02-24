@@ -4,8 +4,8 @@ import { CarService } from './services/car-services';
 const app = express();
 app.use(express.json());
 
-app.all('*',(req: Request, res: Response) => {
-    const result = CarService.getAllCars()
+app.all('*', async (req: Request, res: Response) => {
+    const result = await CarService.getAllCars()
 
     res.status(200).json(result)
 }) 
