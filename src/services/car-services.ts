@@ -3,12 +3,12 @@ import { Car } from "../models/car";
 import { CollectionReference } from 'firebase-admin/firestore'
 
 interface CarService {
-  AddNewCar(car: Car): Car
-  getAllCars(): Promise<Car[] | null>;
+  addNewCar(car: Car): Promise<Car>; 
+  getAllCars(): Promise<Car[] | null>; 
   getCarbyId(carId: string): Car;
 }
 
-const carCollection = connectDB().collection("car") as CollectionReference<Car>;
+const carCollection = connectDB().collection("car") as CollectionReference<Car>; 
 
 const getAllCars = async (): Promise<Car[] | null> => {
   // const cars: Car[] = [];
@@ -25,9 +25,18 @@ const getAllCars = async (): Promise<Car[] | null> => {
     });
     return cars;
   } catch (error){
+      //const res: Car[] = []
     return null
   }
   
 };
 
-export const CarService = { getAllCars } as CarService;
+const addNewCar = async (car: Car): Promise<Car> => {
+    const result = await carCollection.add(car)
+
+    car.id = result.id
+
+    return car;
+}
+
+export const carService = { getAllCars, addNewCar } as CarService;
