@@ -31,7 +31,7 @@ app.post("/cars", async (req: Request, res: Response) => {
 }) 
 
 
-const port = 3450;
+const port = process.env.PORT || 3450;
 
 app.listen(port,() => {
     console.log(`listening to port: ${port}`)
